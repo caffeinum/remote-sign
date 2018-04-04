@@ -9,8 +9,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypto": "^0.2.0",
     "bitcoinjs-lib": "^3.3.2",
+    "bitcoinjs-message": "^2.0.0",
     "grpc": "^1.10.1",
-    "ws": "^5.1.1"
+    "nodemon": "^1.17.3",
+    "ws": "^5.1.1",
+    "zbase32": "0.0.2"
   }
 }
