@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package browser;
+
+service BrowserSign {
+ /** lncli: `signmessage`
+    SignMessage signs a message with this node's private key. The returned
+    signature string is `zbase32` encoded and pubkey recoverable, meaning that
+    only the message digest and signature are needed for verification.
+    */
+    rpc SignMessage (SignMessageRequest) returns (SignMessageResponse);
+}
+
+// from lnd's rpc.proto:
+message SignMessageRequest {
+    /// The message to be signed
+    bytes msg = 1 [ json_name = "msg" ];
+}
+message SignMessageResponse {
+    /// The signature for the given message
+    string signature = 1 [ json_name = "signature" ];
+}
+
