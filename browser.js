@@ -9,7 +9,7 @@ var url = host+':'+port
 var br_descriptor = grpc.load('browser_sign.proto')
 var br = br_descriptor.browser
 
-var wif = process.env.LND_WIF || '92Qu1Qc6xuJERWre7fPZ5vtjmLz14dKjmVVdTZVZ7MsVGXtPk7E'
+var wif = process.env.LND_WIF || '91jKQJy3AgDNHaLq99vnezBA3ksZBZCa7Bq8mm6drA2Axu3RuME'
 var myKey = new bitcoin.ECPair.fromWIF(wif, bitcoin.networks.testnet)
 
 console.log('[ADDRESS]', myKey.getAddress())
@@ -34,10 +34,28 @@ function signMessage (call, callback) {
     callback(null, { signature })
 }
 
+function signCompact (call, callback) {
+    var data = call.request.msg
+    console.log('[TO SIGN]', call.request)
+
+    var hash = bitcoin.crypto.sha256(bitcoin.crypto.sha256(data))
+    console.log('[HASHED]', hash)
+
+    var buf
+    var signed = myKey.sign(hash).toCompact(1, true)
+    console.log('[SIGNED]', signed)
+
+    var signature = signed.toString('base64')
+    console.log('[SIGNATURE]', signature)
+
+    callback(null, { signature })
+}
+
 function getServer() {
     var server = new grpc.Server()
     server.addService(br.BrowserSign.service, {
-        signMessage: signMessage
+        signMessage: signMessage,
+        signCompact: signCompact,
     })
 
     return server

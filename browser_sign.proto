@@ -3,12 +3,19 @@ syntax = "proto3";
 package browser;
 
 service BrowserSign {
- /** lncli: `signmessage`
-    SignMessage signs a message with this node's private key. The returned
-    signature string is `zbase32` encoded and pubkey recoverable, meaning that
+ /** `remote`: `signmessage`
+    SignMessage signs a message with this user's private key. The returned
+    signature string is `base64` encoded and pubkey recoverable, meaning that
     only the message digest and signature are needed for verification.
     */
     rpc SignMessage (SignMessageRequest) returns (SignMessageResponse);
+
+ /** `remote`: `signmessage`
+    SignMessage signs a message with this user's private key. The returned
+    signature string is `base64` encoded and pubkey recoverable, meaning that
+    only the message digest and signature are needed for verification.
+    */
+    rpc SignCompact (SignMessageRequest) returns (SignCompactResponse);
 }
 
 // from lnd's rpc.proto:
@@ -21,3 +28,7 @@ message SignMessageResponse {
     string signature = 1 [ json_name = "signature" ];
 }
 
+message SignCompactResponse {
+    /// The compacted signature for the given message
+    string signature = 1 [ json_name = "signature" ];
+}
