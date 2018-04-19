@@ -22,6 +22,7 @@ service BrowserSign {
 message SignMessageRequest {
     /// The message to be signed
     bytes msg = 1 [ json_name = "msg" ];
+    string type = 2 [ json_name = "type" ];
 }
 message SignMessageResponse {
     /// The signature for the given message
