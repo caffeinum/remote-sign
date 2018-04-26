@@ -4,6 +4,8 @@
   "description": "",
   "main": "browser.js",
   "scripts": {
+    "start": "nodemon browser.js",
+    "dev": "nodemon browser.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
